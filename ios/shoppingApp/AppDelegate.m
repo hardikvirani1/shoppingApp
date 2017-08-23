@@ -10,7 +10,9 @@
 #import "AppDelegate.h"
 
 #import <React/RCTBundleURLProvider.h>
-#import <React/RCTRootView.h>
+#-                                                                                                                                                                                             
+“–
+÷æ`````````````   import <React/RCTRootView.h>
 
 @implementation AppDelegate
 

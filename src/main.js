@@ -4,7 +4,7 @@ import {StackNavigator, DrawerNavigator} from 'react-navigation';
 import login from './components/login';
 import homeview from './components/homeview';
 import profiles from './components/profiles';
-
+import productlist from './components/productList';
 
 class Main extends Component {
 
@@ -21,6 +21,7 @@ const MainNav = StackNavigator({
             screen: DrawerNavigator({
                 homeview: { screen: homeview },
                 profiles: { screen: profiles },
+                productlist: {screen: productlist},
             },{
                     //contentComponent:props=> <Image source={require('../images/bulb.jpeg')} style={{height:100}} />
                 }

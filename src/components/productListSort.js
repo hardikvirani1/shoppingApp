@@ -3,8 +3,11 @@ import {AppRegistry, StyleSheet, Text, View, Dimensions, TextInput, TouchableHig
 import font from '../helper/fontsize';
 import Header from '../helper/staticHeader';
 import {Button, Icon, Card} from 'react-native-elements';
-const {width, height} = Dimensions.get('window');
+import ActionSheet from 'react-native-actionsheet';
 
+const {width, height} = Dimensions.get('window');
+const options = [ 'Cancel', 'Men', 'Women', ];
+const title = 'Select Category';
 const data = [
     {id:1, name:'PartyWear Glasses', price:'INR 1596', uri: require('../../images/coat.jpeg'),  off: '60% off', },
     {id:2, name:'PartyWear Shoes', price:'INR 895', uri: require('../../images/shoes.jpeg'), off: '45% off', },
@@ -15,7 +18,15 @@ const data = [
     {id:7, name:'Wool Blend Coat', price:'INR 3955', uri: require('../../images/shoes.jpeg'), off: '35% off', },
 ];
 
-class ProductList extends Component{
+let DESTRUCTIVE_INDEX = 3;
+let CANCEL_INDEX = 0;
+
+class ProductListSort extends Component{
+
+    state = {
+        selectedIndex:0, clicked: 'none',  selected: '1',
+    };
+
     static navigationOptions = {
         header: null,
     };
@@ -24,10 +35,10 @@ class ProductList extends Component{
         return data.map(item => {
 
             return(
-                <Card key={item.id} containerStyle={{margin:8}}>
-                    <View style={{height:height/3}}>
+                <Card key={item.id} flexDirection="row" containerStyle={{marginRight:8, marginLeft:8, marginTop:0, marginBottom:8}}>
+                    <View style={{height:height/3, width:width/2}}>
                         <View>
-                            <Image source={item.uri} resizeMode="contain" style={{height:height/3-30, width:width-100, alignSelf:'center'}} />
+                            <Image source={item.uri} resizeMode="contain" style={{height:height/3-30, width:width/2-50, alignSelf:'center'}} />
                         </View>
                         <View style={styles.DetailWrappers}>
                             <Text style={[font.SMALL_FONT, {fontWeight:'bold', color:'gray'}]}>{item.name}</Text>
@@ -43,11 +54,41 @@ class ProductList extends Component{
         })
     }
 
+    showActionSheets = () => {
+        this.ActionSheet.show()
+    };
+
+    handlePress = (i) => {
+        if(i === 0){}
+        else {
+            this.setState({selected: i})
+        }
+    };
 
     render(){
         return(
             <View style={styles.mainView}>
-                <Header headerText={'Products'} navigation={this.props.navigation.navigate} />
+                <Header headerText={'Products Sort'} navigation={this.props.navigation.navigate} />
+
+                <View style={styles.sortView}>
+                    <View style={{flexDirection:'row',}}>
+                        <Icon name="list" color="black" iconStyle={{backgroundColor:'#fff', padding:2, marginRight:5}} size={25} underlayColor='transparent' />
+                        <Icon name="insert-chart" iconStyle={{backgroundColor:'#fff', padding:2}} color="black" size={25} underlayColor='transparent' />
+                    </View>
+                    <View style={{justifyContent:'flex-end', flexDirection:'row'}}>
+                        <Button onPress={this.showActionSheets} icon={{name: 'keyboard-arrow-down', color:'black', }}
+                                iconRight={true} title={options[this.state.selected]} backgroundColor="#fff"
+                                color="black" buttonstyle={{height:20}}  />
+                        <ActionSheet
+                            ref={o => this.ActionSheet = o}
+                            title={title}
+                            options={options}
+                            cancelButtonIndex={CANCEL_INDEX}
+                            destructiveButtonIndex={DESTRUCTIVE_INDEX}
+                            onPress={this.handlePress}
+                        />
+                    </View>
+                </View>
 
                 <ScrollView>
                     {this.renderCard()}
@@ -64,8 +105,13 @@ const styles = StyleSheet.create({
     DetailWrappers: {
         alignItems:'center',
         marginTop:5,
+    },
+    sortView: {
+        margin:8,
+        flexDirection:'row',
+        justifyContent:'space-between'
     }
 });
 
 
-export default ProductList;
+export default ProductListSort;

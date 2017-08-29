@@ -24,7 +24,7 @@ class ProductList extends Component{
         return data.map(item => {
 
             return(
-                <Card key={item.id} containerStyle={{margin:8}}>
+                <View key={item.id} style={{margin:8, padding:6, marginBottom:0, height:height/2.6, backgroundColor:'#fff'}}>
                     <View style={{height:height/3}}>
                         <View>
                             <Image source={item.uri} resizeMode="contain" style={{height:height/3-30, width:width-100, alignSelf:'center'}} />
@@ -34,11 +34,11 @@ class ProductList extends Component{
                             <Text style={[font.SMALL_FONT, {color:'rgba(126,96,200,1)'}]}>{item.price}</Text>
                         </View>
                         <View style={{flexDirection:'row', justifyContent:'center', }}>
-                            <Text style={[font.SMALL_FONT, {fontWeight:'bold', color:'gray', marginRight:7, textDecorationLine: 'line-through', textDecorationStyle: 'solid'}]}>{item.price}</Text>
-                            <Text style={[font.SMALL_FONT, {fontWeight:'bold', color:'gray'}]}>{item.off}</Text>
+                            <Text style={[font.SMALL_FONT, { color:'gray', marginRight:7, textDecorationLine: 'line-through', textDecorationStyle: 'solid'}]}>{item.price}</Text>
+                            <Text style={[font.SMALL_FONT, {color:'gray'}]}>{item.off}</Text>
                         </View>
                     </View>
-                </Card>
+                </View>
             );
         })
     }

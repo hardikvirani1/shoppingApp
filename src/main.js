@@ -7,6 +7,9 @@ import profiles from './components/profiles';
 import productlist from './components/productList';
 import productlistsort from './components/productListSort';
 import cartview from './components/cartView';
+import orderview from './components/orderView';
+import shippingview  from './components/shippingView';
+import paymentview from './components/paymentView';
 
 class Main extends Component {
 
@@ -19,6 +22,9 @@ class Main extends Component {
 
 const MainNav = StackNavigator({
         login: {screen: login},
+        orderview: {screen: orderview},
+        shippingview: {screen: shippingview},
+        paymentview: {screen: paymentview},
         Drawer: {
             screen: DrawerNavigator({
                 homeview: { screen: homeview },

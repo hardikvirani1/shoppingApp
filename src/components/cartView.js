@@ -22,12 +22,11 @@ class CartView extends Component{
 
     renderCard(){
         return data.map(item => {
-
             return(
-                <View key={item.id} style={{height:height/4.1, backgroundColor:'#fff', margin:10, marginTop:10, marginBottom:0, padding:5}}>
+                <View key={item.id} style={{height:height/3.70, backgroundColor:'#fff', margin:10, marginTop:10, marginBottom:0, padding:5}}>
                     <View style={{flexDirection:'row', justifyContent:'space-between'}}>
                         <View>
-                            <Image source={item.uri} resizeMode="contain" style={{height:width/3, width:width/3, }} />
+                            <Image source={item.uri} resizeMode="contain" style={{height:height/4.5, width:height/4.5, }} />
                         </View>
                         <View style={styles.DetailWrappers}>
                             <Text style={[font.SMALL_FONT, {fontWeight:'bold',}]}>{item.name}</Text>
@@ -63,7 +62,7 @@ class CartView extends Component{
                     {this.renderCard()}
                 </ScrollView>
 
-                <TouchableHighlight onPress={() => {alert('press')}} style={{ height:width*0.1, backgroundColor:'rgba(126,96,200,1)',
+                <TouchableHighlight onPress={() => this.props.navigation.navigate('orderview') } style={{ height:width*0.1, backgroundColor:'rgba(126,96,200,1)',
                     justifyContent:'center', margin:10, borderRadius:5}} underlayColor='rgba(126,96,200,1)'>
                     <Text style={[font.MEDIUM_FONT, {color:'#fff', alignSelf:'center'}]}>Order Details</Text>
                 </TouchableHighlight>

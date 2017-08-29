@@ -6,7 +6,7 @@ import {Button, Icon, Card} from 'react-native-elements';
 import ActionSheet from 'react-native-actionsheet';
 
 const {width, height} = Dimensions.get('window');
-const options = [ 'Cancel', 'Men', 'Women', ];
+const options = [ 'Cancel', 'Women', 'Men', 'Kids' ];
 const title = 'Select Category';
 const data = [
     {id:1, name:'PartyWear Glasses', price:'INR 1596', uri: require('../../images/coat.jpeg'),  off: '60% off', },
@@ -18,7 +18,7 @@ const data = [
     {id:7, name:'Wool Blend Coat', price:'INR 3955', uri: require('../../images/shoes.jpeg'), off: '35% off', },
 ];
 
-let DESTRUCTIVE_INDEX = 3;
+let DESTRUCTIVE_INDEX = 4;
 let CANCEL_INDEX = 0;
 
 class ProductListSort extends Component{
@@ -31,9 +31,34 @@ class ProductListSort extends Component{
         header: null,
     };
 
-    renderCard(){
-        return data.map(item => {
+    renderCards = (i) => {
+        return(
+            <Card key={data[i].id} flexDirection="row" containerStyle={{marginRight:8, marginLeft:8, marginTop:0, marginBottom:8}}>
+                <View style={{height:height/3, width:width/2}}>
+                    <View>
+                        <Image source={data[i].uri} resizeMode="contain" style={{height:height/3-30, width:width/2-50, alignSelf:'center'}} />
+                    </View>
+                    <View style={styles.DetailWrappers}>
+                        <Text style={[font.SMALL_FONT, {fontWeight:'bold', color:'gray'}]}>{data[i].name}</Text>
+                        <Text style={[font.SMALL_FONT, {color:'rgba(126,96,200,1)'}]}>{data[i].price}</Text>
+                    </View>
+                    <View style={{flexDirection:'row', justifyContent:'center', }}>
+                        <Text style={[font.SMALL_FONT, {fontWeight:'bold', color:'gray', marginRight:7, textDecorationLine: 'line-through', textDecorationStyle: 'solid'}]}>{data[i].price}</Text>
+                        <Text style={[font.SMALL_FONT, {fontWeight:'bold', color:'gray'}]}>{data[i].off}</Text>
+                    </View>
+                </View>
+                {console.log('Product Name : ',data[i].name)}
+            </Card>
+        );
+    };
 
+    renderCard = () => {
+        for(let i = 0; i <= data.length - 1; i++) {
+            this.renderCards(i);
+            console.log('I is : ', i)
+        }
+
+        /*return data.map(item => {
             return(
                 <Card key={item.id} flexDirection="row" containerStyle={{marginRight:8, marginLeft:8, marginTop:0, marginBottom:8}}>
                     <View style={{height:height/3, width:width/2}}>
@@ -51,8 +76,8 @@ class ProductListSort extends Component{
                     </View>
                 </Card>
             );
-        })
-    }
+        })*/
+    };
 
     showActionSheets = () => {
         this.ActionSheet.show()

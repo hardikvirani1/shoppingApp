@@ -45,7 +45,7 @@ class Login extends Component{
 
                 <View style={{alignSelf:'center',  width:width/3, margin:10}}>
                     <View>
-                        <TouchableHighlight onPress={() => {this.props.navigation.navigate('productlistsort')}} underlayColor='transparent'
+                        <TouchableHighlight onPress={() => {this.props.navigation.navigate('cartview')}} underlayColor='transparent'
                                              style={{borderRadius:6,alignItems:'center',
                             padding:10, backgroundColor:'rgba(72,50,130,1)'}}>
                             <Text style={[font.MEDIUM_FONT, {color:'white'}]}>Login</Text>

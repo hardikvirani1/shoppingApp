@@ -10,6 +10,8 @@ import cartview from './components/cartView';
 import orderview from './components/orderView';
 import shippingview  from './components/shippingView';
 import paymentview from './components/paymentView';
+import orderdetailview from './components/orderDetailView';
+import addressview from './components/addressView';
 
 class Main extends Component {
 
@@ -23,8 +25,10 @@ class Main extends Component {
 const MainNav = StackNavigator({
         login: {screen: login},
         orderview: {screen: orderview},
+        orderdetailview: {screen: orderdetailview},
         shippingview: {screen: shippingview},
         paymentview: {screen: paymentview},
+        addressview: {screen: addressview},
         Drawer: {
             screen: DrawerNavigator({
                 homeview: { screen: homeview },

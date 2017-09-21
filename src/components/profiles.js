@@ -14,14 +14,14 @@ class Profiles extends Component{
         return(
             <View style={styles.mainView}>
 
-                <View>
-                    <View style={{flexDirection:'row',}}>
-                        <Icon name="arrow-back" size={25} color="black" onPress={() => this.props.navigation.navigate('homeview')} />
-                        <Text style={[font.TITLE_FONT, {color:'black', marginLeft:10}]}>Account</Text>
+                <View style={{height:height/3}}>
+                    <View>
+                        <Image source={require('../../images/bulb.jpeg')} style={{width, height:height/3, }} />
                     </View>
-
-                    <Image source={require('../../images/bulb.jpeg')} style={{width, height:height/3, }} />
-
+                    <View style={{flexDirection:'row', marginTop:-height/3+17, backgroundColor:'transparent',}}>
+                        <Icon name="arrow-back" size={25} style={{marginLeft:10}} color="white" onPress={() => this.props.navigation.navigate('homeview')} />
+                        <Text style={[font.TITLE_FONT, {color:'white', marginLeft:10}]}>Account</Text>
+                    </View>
                 </View>
 
                 <View style={{backgroundColor:'#fff'}}>

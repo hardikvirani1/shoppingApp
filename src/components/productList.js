@@ -22,7 +22,6 @@ class ProductList extends Component{
 
     renderCard(){
         return data.map(item => {
-
             return(
                 <View key={item.id} style={{margin:8, padding:6, marginBottom:0, height:height/2.6, backgroundColor:'#fff'}}>
                     <View style={{height:height/3}}>

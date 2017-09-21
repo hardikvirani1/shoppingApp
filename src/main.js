@@ -13,11 +13,17 @@ import paymentview from './components/paymentView';
 import orderdetailview from './components/orderDetailView';
 import addressview from './components/addressView';
 
-class Main extends Component {
+import { applyMiddleware, createStore } from 'redux';
+import { Provider } from 'react-redux';
+import ReduxThunk from 'redux-thunk';
+import reducer from './reducers';
 
+export default class main extends Component {
     render(){
         return(
-            <MainNav/>
+            <Provider store={createStore(reducer, {}, applyMiddleware(ReduxThunk))}>
+                    <MainNav/>
+            </Provider>
         );
     }
 }
@@ -47,4 +53,3 @@ const MainNav = StackNavigator({
     }
 );
 
-export default MainNav;

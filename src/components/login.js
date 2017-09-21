@@ -1,16 +1,45 @@
 import React, { Component } from 'react';
-import {AppRegistry, StyleSheet, StatusBar, Text, View, Dimensions, TextInput, TouchableHighlight} from 'react-native';
+import {AppRegistry, StyleSheet, StatusBar, Text, View, Dimensions, TextInput, TouchableHighlight, AsyncStorage} from 'react-native';
 import { Icon, } from "react-native-elements";
 import font from '../helper/fontsize';
 import {showAlert} from '../helper/commonFunctions'
 import * as actions from '../actions'
 import {connect, } from 'react-redux';
+import Spinner from '../helper/loader';
+import { NavigationActions } from 'react-navigation'
 const {width, height} = Dimensions.get('window');
 
-class Login extends Component{
+const resetAction = NavigationActions.reset({
+    index: 0,
+    actions: [
+        NavigationActions.navigate({ routeName: 'Drawer'})
+    ]
+});
+
+class Login extends Component {
     static navigationOptions = {
         header: null,
     };
+
+    constructor(props){
+        super(props);
+        this.state = {
+            isLoading:true,
+        };
+    }
+
+    componentWillMount() {
+        AsyncStorage.getItem('user', (err, result) => {
+            console.log('async data:', result);
+            this.setState({isLoading:false});
+            if (result) {
+                this.props.navigation.dispatch(resetAction)
+            }
+            else{
+                this.setState({isLoading:false})
+            }
+        });
+    }
 
     onCreateSet = () => {
         const {email, password} = this.props;
@@ -21,7 +50,13 @@ class Login extends Component{
             }
             else {
                 this.props.loginSet(email, password).then((res) => {
-                    this.props.navigation.navigate('homeview')
+                    if(this.props.loginSuccess === 0){
+                        console.log('props:', this.props)
+                        this.props.navigation.navigate('homeview')
+                    } else{
+                        showAlert('Invalid user');
+                    }
+
                 }).catch((err) => {
                     showAlert(err);
                 });
@@ -38,6 +73,11 @@ class Login extends Component{
     };
 
     render(){
+        if (this.state.isLoading) {
+            return(
+                <Spinner visible={this.state.isLoading} />
+            );
+        }
         return(
             <View style={styles.mainView}>
                 <View style={styles.iconView}>
@@ -83,8 +123,8 @@ class Login extends Component{
                 <View style={{alignSelf:'center',  width:width/3, margin:10}}>
                     <View>
                         <TouchableHighlight onPress={this.onCreateSet} underlayColor='transparent'
-                                             style={{borderRadius:6,alignItems:'center',
-                            padding:10, backgroundColor:'rgba(72,50,130,1)'}}>
+                                            style={{borderRadius:6,alignItems:'center',
+                                                padding:10, backgroundColor:'rgba(72,50,130,1)'}}>
                             <Text style={[font.MEDIUM_FONT, {color:'white'}]}>Login</Text>
                         </TouchableHighlight>
                     </View>
@@ -124,9 +164,9 @@ const styles = StyleSheet.create({
 });
 
 mapStateToProps = state => {
-    const {email, password} = state.login;
+    const {email, password, loginSuccess} = state.login;
     return {
-        email, password
+        email, password, loginSuccess
     }
 };
 

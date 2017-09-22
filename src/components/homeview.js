@@ -1,18 +1,39 @@
 import React, { Component } from 'react';
 import {AppRegistry, StyleSheet, Text, View, Dimensions, TextInput, TouchableHighlight, ScrollView, Image} from 'react-native';
 import { Icon, } from "react-native-elements";
-const {width, height} = Dimensions.get('window');
 import font from '../helper/fontsize';
 import Header from '../helper/header';
 import ScrollableTabView, { DefaultTabBar, } from 'react-native-scrollable-tab-view';
 import { Col, Row, Grid } from "react-native-easy-grid";
+import * as actions from '../actions'
+import {connect, } from 'react-redux';
+import Spinner from '../helper/loader';
+const {width, height} = Dimensions.get('window');
 
-class Login extends Component{
+class Homeview extends Component{
     static navigationOptions = {
         header: null,
     };
 
+    constructor(props){
+        super(props);
+        this.state = {
+            isLoading:true,
+        };
+    }
+
+    componentWillMount(){
+        this.props.getAllProduct().then(() => {
+            this.setState({isLoading:false})
+        })
+    }
+
     render(){
+        if (this.state.isLoading) {
+            return(
+                <Spinner visible={this.state.isLoading} />
+            );
+        }
         return(
             <View style={styles.mainView}>
                 <Header headerText={'Strap'} navigation={this.props.navigation.navigate} />
@@ -31,8 +52,8 @@ class Login extends Component{
                 <ScrollableTabView renderTabBar={()=><DefaultTabBar  />}>
                     <ScrollView tabLabel='Home'>
                         <Grid>
-                            <Row>
-                                <Image source={require('../../images/sales.png')} style={{width, height:height/3}}/>
+                            <Row>{alert(this.props.product[0])}
+                                <Image source={{uri: this.props.product[0]}} style={{width, height:height/3}}/>
                             </Row>
                             <Row>
                                 <Image source={require('../../images/shirt.png')} style={{width, height:height/5}}/>
@@ -93,4 +114,12 @@ const styles = StyleSheet.create({
 });
 
 
-export default Login;
+mapStateToProps = state => {
+    console.log(state, 'state')
+    const {product, failed} = state.product;
+    return {
+        product, failed
+    }
+};
+
+export default connect(mapStateToProps, actions)(Homeview);

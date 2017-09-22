@@ -6,4 +6,5 @@ module.exports = {
     baseUrl: 'http://localhost:8080/api/',
     auth: 'shopping/',
     login: 'shopping/check',
+    img: 'shopping/img'
 };
